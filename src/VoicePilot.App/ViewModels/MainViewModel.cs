@@ -95,7 +95,7 @@ public sealed partial class MainViewModel : ObservableObject
             return new ProviderOption(provider.Id, provider.DisplayName, description + (translation is null ? " 无匹配翻译实现。" : string.Empty));
         }).ToArray();
         SelectedSourceMode = SourceModes[0];
-        SelectedProvider = ProviderOptions.Length > 0 ? ProviderOptions[0] : null;
+        SelectedProvider = ProviderOptions.Count > 0 ? ProviderOptions[0] : null;
         _session.RecognitionUpdated += OnRecognitionUpdated;
         _session.TranscriptCompleted += OnTranscriptCompleted;
         _session.NotificationRaised += OnSessionNotification;
@@ -170,7 +170,7 @@ public sealed partial class MainViewModel : ObservableObject
             SelectedTargetLanguage = TargetLanguages.FirstOrDefault(item => item.Code == _settings.TargetLanguage) ??
                 (TargetLanguages.Count > 0 ? TargetLanguages[0] : null);
             SelectedProvider = ProviderOptions.FirstOrDefault(item => item.Id == _settings.RecognitionProviderId) ??
-                (ProviderOptions.Length > 0 ? ProviderOptions[0] : null);
+                (ProviderOptions.Count > 0 ? ProviderOptions[0] : null);
             SelectedSourceMode = SourceModes.FirstOrDefault(item => item.Value == _settings.SourceMode) ?? SourceModes[0];
             _devices.StartMonitoring();
             await RefreshDevicesAsync();
