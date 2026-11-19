@@ -62,6 +62,20 @@ public sealed partial class MainViewModel : ObservableObject
         _session = session;
         _settingsStore = settingsStore;
         _languageCatalog = languageCatalog;
+        ProviderDescription = string.Empty;
+        MicrophoneDeviceId = "未选择";
+        PlaybackDeviceId = "未选择";
+        MicrophoneGain = 0.8;
+        PlaybackGain = 0.8;
+        GlossaryText = string.Empty;
+        InterimTranscript = "尚无临时识别结果";
+        StatusTitle = "就绪 · 未采集";
+        StatusBrush = new SolidColorBrush(Color.FromArgb(255, 108, 117, 125));
+        CaptureDuration = "00:00:00";
+        QueueStatus = "队列 0 KB · 丢弃 0";
+        NotificationSeverity = InfoBarSeverity.Informational;
+        NotificationTitle = string.Empty;
+        NotificationMessage = string.Empty;
         _dispatcher = DispatcherQueue.GetForCurrentThread() ?? throw new InvalidOperationException("ViewModel 必须在 UI 线程创建。");
         _timer = _dispatcher.CreateTimer();
         _timer.Interval = TimeSpan.FromSeconds(1);
@@ -102,23 +116,23 @@ public sealed partial class MainViewModel : ObservableObject
     [ObservableProperty] public partial LanguageOption? SelectedSourceLanguage { get; set; }
     [ObservableProperty] public partial LanguageOption? SelectedTargetLanguage { get; set; }
     [ObservableProperty] public partial ProviderOption? SelectedProvider { get; set; }
-    [ObservableProperty] public partial string ProviderDescription { get; set; } = string.Empty;
-    [ObservableProperty] public partial string MicrophoneDeviceId { get; set; } = "未选择";
-    [ObservableProperty] public partial string PlaybackDeviceId { get; set; } = "未选择";
-    [ObservableProperty] public partial double MicrophoneGain { get; set; } = 0.8;
-    [ObservableProperty] public partial double PlaybackGain { get; set; } = 0.8;
-    [ObservableProperty] public partial string GlossaryText { get; set; } = string.Empty;
-    [ObservableProperty] public partial string InterimTranscript { get; set; } = "尚无临时识别结果";
+    [ObservableProperty] public partial string ProviderDescription { get; set; }
+    [ObservableProperty] public partial string MicrophoneDeviceId { get; set; }
+    [ObservableProperty] public partial string PlaybackDeviceId { get; set; }
+    [ObservableProperty] public partial double MicrophoneGain { get; set; }
+    [ObservableProperty] public partial double PlaybackGain { get; set; }
+    [ObservableProperty] public partial string GlossaryText { get; set; }
+    [ObservableProperty] public partial string InterimTranscript { get; set; }
     [ObservableProperty] public partial bool IsRunning { get; set; }
     [ObservableProperty] public partial bool IsBusy { get; set; }
-    [ObservableProperty] public partial string StatusTitle { get; set; } = "就绪 · 未采集";
-    [ObservableProperty] public partial SolidColorBrush StatusBrush { get; set; } = new(Color.FromArgb(255, 108, 117, 125));
-    [ObservableProperty] public partial string CaptureDuration { get; set; } = "00:00:00";
-    [ObservableProperty] public partial string QueueStatus { get; set; } = "队列 0 KB · 丢弃 0";
+    [ObservableProperty] public partial string StatusTitle { get; set; }
+    [ObservableProperty] public partial SolidColorBrush StatusBrush { get; set; }
+    [ObservableProperty] public partial string CaptureDuration { get; set; }
+    [ObservableProperty] public partial string QueueStatus { get; set; }
     [ObservableProperty] public partial bool HasNotification { get; set; }
-    [ObservableProperty] public partial InfoBarSeverity NotificationSeverity { get; set; } = InfoBarSeverity.Informational;
-    [ObservableProperty] public partial string NotificationTitle { get; set; } = string.Empty;
-    [ObservableProperty] public partial string NotificationMessage { get; set; } = string.Empty;
+    [ObservableProperty] public partial InfoBarSeverity NotificationSeverity { get; set; }
+    [ObservableProperty] public partial string NotificationTitle { get; set; }
+    [ObservableProperty] public partial string NotificationMessage { get; set; }
 
     public bool NeedsMicrophone => SelectedSourceMode?.Value is AudioSourceMode.Microphone or AudioSourceMode.Mixed;
     public bool NeedsPlayback => SelectedSourceMode?.Value is AudioSourceMode.Playback or AudioSourceMode.Mixed;

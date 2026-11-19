@@ -11,6 +11,7 @@
 
 - 工作流运行 [44445233475](https://github.com/chao2hang/voicepilot/actions/runs/44445233475)：Windows 核心测试通过；发布阶段因 `NotificationSeverity` 属性遮蔽枚举类型导致 C# 编译失败，已定位并修复。完整 App 构建和产物仍待下一次工作流验证。
 - 工作流运行 [44445654872](https://github.com/chao2hang/voicepilot/actions/runs/44445654872)：Windows 核心测试再次通过；C# 编译发现 WinUI/CsWinRT 要求使用 partial property（`MVVMTK0045`）及集合分析器问题，已按要求修复，未关闭兼容性分析器。
+- 工作流运行 [44446398622](https://github.com/chao2hang/voicepilot/actions/runs/44446398622)：MVVM Toolkit 8.4.0 的生成器仅接受 preview 语言模式。官方 8.4.2 源码已加入 C# 14 支持，因此升级到稳定补丁 8.4.2 并保持 C# 14，不启用 preview；同时将 partial 定义不允许的属性初始值迁移到构造函数。
 - 最新 Windows 构建状态以 [Actions](https://github.com/chao2hang/voicepilot/actions/workflows/release.yml) 的实际运行结果为准。
 
 ## 当前未验证/待外部条件

@@ -6,7 +6,7 @@
 | UI | WinUI 3 / Windows App SDK 2.7.0 | Stable，发布于 2026-11-17；不使用 Preview/Experimental |
 | 操作系统 | Windows 11 | Windows App SDK 2.x 官方支持矩阵包含 Windows 11 |
 | 音频 | NAudio 2.2.1 的稳定 WASAPI 封装 | 共享模式麦克风与端点级 Loopback |
-| MVVM | CommunityToolkit.Mvvm 8.4.0 | 稳定版 |
+| MVVM | CommunityToolkit.Mvvm 8.4.2 | 稳定版；支持 C# 14 partial property，满足 WinUI/CsWinRT AOT 兼容要求 |
 
 官方依据：
 
