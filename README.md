@@ -14,6 +14,12 @@
 - 显示临时识别、最终结果和对应译文；语言及术语可配置。
 - 设置不保存音频或服务令牌；识别与译文历史仅保留在内存，最多 500 条。
 
+## 下载与自动发布
+
+GitHub Actions 在推送 `v*` 版本标签时自动测试、编译 Windows x64 应用，并将完整 ZIP 发布到 [Releases](https://github.com/chao2hang/voicepilot/releases)。完整解压后运行其中的 `VoicePilot.exe`，不要只复制 EXE。包内包含 .NET 10 和 Windows App SDK 自包含组件；无需另装这两个 Runtime。
+
+可在 Actions 手动执行测试构建而不创建 Release。版本发布步骤、标签规则、SHA-256 校验及未签名说明见 [发布流程](docs/release-process.md)。
+
 ## 在 Windows 11 构建运行
 
 需要：
