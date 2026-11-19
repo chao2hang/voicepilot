@@ -334,15 +334,15 @@ public sealed partial class MainViewModel : ObservableObject
     private void OnSessionNotification(object? sender, SessionNotification notification) => _dispatcher.TryEnqueue(async () =>
     {
         ShowNotification(
-            notification.Severity == NotificationSeverity.Error ? "会话错误" : "会话状态",
+            notification.Severity == global::VoicePilot.Core.Sessions.NotificationSeverity.Error ? "会话错误" : "会话状态",
             notification.Message,
             notification.Severity switch
             {
-                NotificationSeverity.Error => InfoBarSeverity.Error,
-                NotificationSeverity.Warning => InfoBarSeverity.Warning,
+                global::VoicePilot.Core.Sessions.NotificationSeverity.Error => InfoBarSeverity.Error,
+                global::VoicePilot.Core.Sessions.NotificationSeverity.Warning => InfoBarSeverity.Warning,
                 _ => InfoBarSeverity.Informational,
             });
-        if (notification.Severity == NotificationSeverity.Error &&
+        if (notification.Severity == global::VoicePilot.Core.Sessions.NotificationSeverity.Error &&
             notification.Code is not ("TRANSLATION_FAILED" or "CAPTURE_STOP_FAILED" or "CAPTURE_STOP_TIMEOUT" or "PROVIDER_STOP_TIMEOUT") &&
             IsRunning && !_shuttingDown)
         {

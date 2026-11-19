@@ -7,6 +7,11 @@
 - 跨平台单元测试：最终 Debug 23/23、Release 23/23 通过，0 失败、0 跳过，详见 [实际测试结果](test-results.md)。覆盖音频帧验证、有界队列、重采样与分块、混音削波/偏移/连续消费/空闲重同步、设置往返、语言配置、会话生命周期及 Provider 停止超时。
 - 这些测试使用内存音频及测试桩，**不证明 Windows 音频设备或 WinUI 3 已运行**。
 
+## GitHub Actions Windows 验证
+
+- 工作流运行 [44445233475](https://github.com/chao2hang/voicepilot/actions/runs/44445233475)：Windows 核心测试通过；发布阶段因 `NotificationSeverity` 属性遮蔽枚举类型导致 C# 编译失败，已定位并修复。完整 App 构建和产物仍待下一次工作流验证。
+- 最新 Windows 构建状态以 [Actions](https://github.com/chao2hang/voicepilot/actions/workflows/release.yml) 的实际运行结果为准。
+
 ## 当前未验证/待外部条件
 
 | 功能 | 状态 |

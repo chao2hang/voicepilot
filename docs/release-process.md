@@ -15,7 +15,18 @@ WinUI 3 不能按本项目当前形态安全地发布成单个无依赖 EXE。�
 
 ## 正式/预发布版本
 
-提交更新到 `main` 后，在确认准备发布的提交上创建带注释标签：
+提交更新到 `main` 后，在确认准备发布的提交上创建带注释标签。推荐使用脚本，默认不会推送或触发构建：
+
+```powershell
+git switch main
+git pull --ff-only
+# 本地检查/创建标签
+pwsh ./scripts/release-version.ps1 -Version v0.1.0
+# 显式推送，触发该版本的 GitHub Actions 构建与 Release
+pwsh ./scripts/release-version.ps1 -Version v0.1.0 -Push
+```
+
+直接使用 Git 的等价命令：
 
 ```powershell
 git switch main
