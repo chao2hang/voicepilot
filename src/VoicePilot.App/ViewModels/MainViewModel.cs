@@ -80,8 +80,8 @@ public sealed partial class MainViewModel : ObservableObject
                 : provider.IsAvailable ? "已配置服务。" : "后端协议未接入；可测试采集，但不会生成真实识别或译文。";
             return new ProviderOption(provider.Id, provider.DisplayName, description + (translation is null ? " 无匹配翻译实现。" : string.Empty));
         }).ToArray();
-        _selectedSourceMode = SourceModes[0];
-        _selectedProvider = ProviderOptions.FirstOrDefault();
+        SelectedSourceMode = SourceModes[0];
+        SelectedProvider = ProviderOptions.Length > 0 ? ProviderOptions[0] : null;
         _session.RecognitionUpdated += OnRecognitionUpdated;
         _session.TranscriptCompleted += OnTranscriptCompleted;
         _session.NotificationRaised += OnSessionNotification;
@@ -96,29 +96,29 @@ public sealed partial class MainViewModel : ObservableObject
     public ObservableCollection<LanguageOption> TargetLanguages { get; } = [];
     public ObservableCollection<TranscriptLine> TranscriptLines { get; } = [];
 
-    [ObservableProperty] private OptionItem<AudioSourceMode>? _selectedSourceMode;
-    [ObservableProperty] private AudioDeviceOption? _selectedMicrophone;
-    [ObservableProperty] private AudioDeviceOption? _selectedPlayback;
-    [ObservableProperty] private LanguageOption? _selectedSourceLanguage;
-    [ObservableProperty] private LanguageOption? _selectedTargetLanguage;
-    [ObservableProperty] private ProviderOption? _selectedProvider;
-    [ObservableProperty] private string _providerDescription = string.Empty;
-    [ObservableProperty] private string _microphoneDeviceId = "未选择";
-    [ObservableProperty] private string _playbackDeviceId = "未选择";
-    [ObservableProperty] private double _microphoneGain = 0.8;
-    [ObservableProperty] private double _playbackGain = 0.8;
-    [ObservableProperty] private string _glossaryText = string.Empty;
-    [ObservableProperty] private string _interimTranscript = "尚无临时识别结果";
-    [ObservableProperty] private bool _isRunning;
-    [ObservableProperty] private bool _isBusy;
-    [ObservableProperty] private string _statusTitle = "就绪 · 未采集";
-    [ObservableProperty] private SolidColorBrush _statusBrush = new(Color.FromArgb(255, 108, 117, 125));
-    [ObservableProperty] private string _captureDuration = "00:00:00";
-    [ObservableProperty] private string _queueStatus = "队列 0 KB · 丢弃 0";
-    [ObservableProperty] private bool _hasNotification;
-    [ObservableProperty] private InfoBarSeverity _notificationSeverity = InfoBarSeverity.Informational;
-    [ObservableProperty] private string _notificationTitle = string.Empty;
-    [ObservableProperty] private string _notificationMessage = string.Empty;
+    [ObservableProperty] public partial OptionItem<AudioSourceMode>? SelectedSourceMode { get; set; }
+    [ObservableProperty] public partial AudioDeviceOption? SelectedMicrophone { get; set; }
+    [ObservableProperty] public partial AudioDeviceOption? SelectedPlayback { get; set; }
+    [ObservableProperty] public partial LanguageOption? SelectedSourceLanguage { get; set; }
+    [ObservableProperty] public partial LanguageOption? SelectedTargetLanguage { get; set; }
+    [ObservableProperty] public partial ProviderOption? SelectedProvider { get; set; }
+    [ObservableProperty] public partial string ProviderDescription { get; set; } = string.Empty;
+    [ObservableProperty] public partial string MicrophoneDeviceId { get; set; } = "未选择";
+    [ObservableProperty] public partial string PlaybackDeviceId { get; set; } = "未选择";
+    [ObservableProperty] public partial double MicrophoneGain { get; set; } = 0.8;
+    [ObservableProperty] public partial double PlaybackGain { get; set; } = 0.8;
+    [ObservableProperty] public partial string GlossaryText { get; set; } = string.Empty;
+    [ObservableProperty] public partial string InterimTranscript { get; set; } = "尚无临时识别结果";
+    [ObservableProperty] public partial bool IsRunning { get; set; }
+    [ObservableProperty] public partial bool IsBusy { get; set; }
+    [ObservableProperty] public partial string StatusTitle { get; set; } = "就绪 · 未采集";
+    [ObservableProperty] public partial SolidColorBrush StatusBrush { get; set; } = new(Color.FromArgb(255, 108, 117, 125));
+    [ObservableProperty] public partial string CaptureDuration { get; set; } = "00:00:00";
+    [ObservableProperty] public partial string QueueStatus { get; set; } = "队列 0 KB · 丢弃 0";
+    [ObservableProperty] public partial bool HasNotification { get; set; }
+    [ObservableProperty] public partial InfoBarSeverity NotificationSeverity { get; set; } = InfoBarSeverity.Informational;
+    [ObservableProperty] public partial string NotificationTitle { get; set; } = string.Empty;
+    [ObservableProperty] public partial string NotificationMessage { get; set; } = string.Empty;
 
     public bool NeedsMicrophone => SelectedSourceMode?.Value is AudioSourceMode.Microphone or AudioSourceMode.Mixed;
     public bool NeedsPlayback => SelectedSourceMode?.Value is AudioSourceMode.Playback or AudioSourceMode.Mixed;
@@ -151,9 +151,12 @@ public sealed partial class MainViewModel : ObservableObject
                 TargetLanguages.Add(language);
             }
 
-            SelectedSourceLanguage = SourceLanguages.FirstOrDefault(item => item.Code == _settings.SourceLanguage) ?? SourceLanguages.FirstOrDefault();
-            SelectedTargetLanguage = TargetLanguages.FirstOrDefault(item => item.Code == _settings.TargetLanguage) ?? TargetLanguages.FirstOrDefault();
-            SelectedProvider = ProviderOptions.FirstOrDefault(item => item.Id == _settings.RecognitionProviderId) ?? ProviderOptions.FirstOrDefault();
+            SelectedSourceLanguage = SourceLanguages.FirstOrDefault(item => item.Code == _settings.SourceLanguage) ??
+                (SourceLanguages.Count > 0 ? SourceLanguages[0] : null);
+            SelectedTargetLanguage = TargetLanguages.FirstOrDefault(item => item.Code == _settings.TargetLanguage) ??
+                (TargetLanguages.Count > 0 ? TargetLanguages[0] : null);
+            SelectedProvider = ProviderOptions.FirstOrDefault(item => item.Id == _settings.RecognitionProviderId) ??
+                (ProviderOptions.Length > 0 ? ProviderOptions[0] : null);
             SelectedSourceMode = SourceModes.FirstOrDefault(item => item.Value == _settings.SourceMode) ?? SourceModes[0];
             _devices.StartMonitoring();
             await RefreshDevicesAsync();

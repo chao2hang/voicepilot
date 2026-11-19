@@ -10,6 +10,7 @@
 ## GitHub Actions Windows 验证
 
 - 工作流运行 [44445233475](https://github.com/chao2hang/voicepilot/actions/runs/44445233475)：Windows 核心测试通过；发布阶段因 `NotificationSeverity` 属性遮蔽枚举类型导致 C# 编译失败，已定位并修复。完整 App 构建和产物仍待下一次工作流验证。
+- 工作流运行 [44445654872](https://github.com/chao2hang/voicepilot/actions/runs/44445654872)：Windows 核心测试再次通过；C# 编译发现 WinUI/CsWinRT 要求使用 partial property（`MVVMTK0045`）及集合分析器问题，已按要求修复，未关闭兼容性分析器。
 - 最新 Windows 构建状态以 [Actions](https://github.com/chao2hang/voicepilot/actions/workflows/release.yml) 的实际运行结果为准。
 
 ## 当前未验证/待外部条件
