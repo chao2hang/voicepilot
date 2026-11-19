@@ -1,0 +1,13 @@
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+TestResults/
+artifacts/
+*.msix
+*.msixbundle
+*.cer
+*.pfx
+local.settings.json

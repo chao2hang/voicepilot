@@ -1,0 +1,5 @@
+root = true
+
+[*.cs]
+# Test project conventions differ from production naming rules.
+dotnet_diagnostic.CA1707.severity = none

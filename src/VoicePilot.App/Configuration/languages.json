@@ -1,0 +1,10 @@
+[
+  { "code": "auto", "displayName": "自动检测（需服务支持）", "supportsRecognition": true, "supportsTranslation": false },
+  { "code": "zh-CN", "displayName": "中文（普通话）", "supportsRecognition": true, "supportsTranslation": true },
+  { "code": "en-US", "displayName": "英语（美国）", "supportsRecognition": true, "supportsTranslation": true },
+  { "code": "ja-JP", "displayName": "日语", "supportsRecognition": true, "supportsTranslation": true },
+  { "code": "ko-KR", "displayName": "韩语", "supportsRecognition": true, "supportsTranslation": true },
+  { "code": "fr-FR", "displayName": "法语", "supportsRecognition": true, "supportsTranslation": true },
+  { "code": "de-DE", "displayName": "德语", "supportsRecognition": true, "supportsTranslation": true },
+  { "code": "es-ES", "displayName": "西班牙语", "supportsRecognition": true, "supportsTranslation": true }
+]

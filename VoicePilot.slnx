@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/VoicePilot.App/VoicePilot.App.csproj" />
+    <Project Path="src/VoicePilot.Audio/VoicePilot.Audio.csproj" />
+    <Project Path="src/VoicePilot.Core/VoicePilot.Core.csproj" />
+    <Project Path="src/VoicePilot.Infrastructure/VoicePilot.Infrastructure.csproj" />
+    <Project Path="src/VoicePilot.Providers/VoicePilot.Providers.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/VoicePilot.Tests/VoicePilot.Tests.csproj" />
+  </Folder>
+</Solution>
