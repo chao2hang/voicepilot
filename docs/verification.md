@@ -9,23 +9,23 @@
 
 ## GitHub Actions Windows 验证
 
-- 工作流运行 [44445233475](https://github.com/chao2hang/voicepilot/actions/runs/44445233475)：Windows 核心测试通过；发布阶段因 `NotificationSeverity` 属性遮蔽枚举类型导致 C# 编译失败，已定位并修复。完整 App 构建和产物仍待下一次工作流验证。
-- 工作流运行 [44445654872](https://github.com/chao2hang/voicepilot/actions/runs/44445654872)：Windows 核心测试再次通过；C# 编译发现 WinUI/CsWinRT 要求使用 partial property（`MVVMTK0045`）及集合分析器问题，已按要求修复，未关闭兼容性分析器。
-- 工作流运行 [44446398622](https://github.com/chao2hang/voicepilot/actions/runs/44446398622)：MVVM Toolkit 8.4.0 的生成器仅接受 preview 语言模式。官方 8.4.2 源码已加入 C# 14 支持，因此升级到稳定补丁 8.4.2 并保持 C# 14，不启用 preview；同时将 partial 定义不允许的属性初始值迁移到构造函数。
-- 最新 Windows 构建状态以 [Actions](https://github.com/chao2hang/voicepilot/actions/workflows/release.yml) 的实际运行结果为准。
+- [工作流运行 44448022772](https://github.com/chao2hang/voicepilot/actions/runs/44448022772) 在 `windows-2022` 上成功执行 Release 核心测试 23/23、WinUI/XAML 编译、EXE 文件版本检查、.NET/Windows App SDK 自包含打包和 Artifact 上传。
+- 构建中实际发现并修复了 WinUI 枚举名遮蔽、MVVM partial-property/AOT 兼容和集合索引问题。MVVM Toolkit 已升级到稳定版 8.4.2，保持 C# 14，未启用 preview 或抑制兼容性警告。
+- CI 成功不代表 Windows 11 实机 GUI、音频硬件、真实服务或性能验收。最新状态以 [Actions](https://github.com/chao2hang/voicepilot/actions/workflows/release.yml) 为准。
 
 ## 当前未验证/待外部条件
 
 | 功能 | 状态 |
 | --- | --- |
-| WinUI 3 的 Windows 实际构建、XAML 编译、启动及 UI 自动化 | 当前环境为 Linux，未完成 Windows 实机构建/运行 |
+| WinUI 3 的 Windows 编译与 XAML 编译 | 已在 GitHub `windows-2022` 成功验证 |
+| WinUI 3 的 Windows 11 实机启动、交互及 UI 自动化 | 尚未执行 |
 | 麦克风枚举、指定端点 Loopback、格式协商 | 代码已实现，未在 Windows 11 设备验证 |
 | 三种音源模式、热插拔/禁用/默认设备切换 | 代码和模拟测试具备，硬件恢复未验证 |
 | 实际 CPU、内存、端到端延迟、连续运行时长 | 未在目标机器执行，无达标结论 |
 | 真实语音识别与翻译 | 后端协议未提供；只有接口和明确标注的模拟实现 |
-| 安装包、签名、自动更新 | 本阶段未实现；使用框架依赖的解包运行方式 |
+| 安装包、签名、自动更新 | 本阶段未实现；提供包含 .NET/Windows App SDK 的自包含解包版，未进行代码签名 |
 
-Windows 构建可在 Linux 使用 `-p:EnableWindowsTargeting=true` 进行部分交叉检查，但这不等于真实运行验证。本环境交叉构建停在 Windows `XamlCompiler.exe` 的 `Exec format error`，没有成功的 App/XAML 构建结论。最终以 Windows 11 上 `docs/windows-acceptance.md` 的实测记录为准。
+Linux 交叉构建曾停在 Windows `XamlCompiler.exe` 的 `Exec format error`；上述 GitHub Windows runner 已完成成功构建，但不等于真实运行验证。最终以 Windows 11 上 `docs/windows-acceptance.md` 的实测记录为准。
 
 ## 资源释放边界
 

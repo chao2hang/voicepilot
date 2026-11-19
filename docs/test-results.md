@@ -35,9 +35,18 @@ dotnet test tests/VoicePilot.Tests/VoicePilot.Tests.csproj --configuration Relea
 
 测试全部使用内存音频和测试桩，**不证明 Windows WASAPI、WinUI 3、真实服务或目标机性能已验证**。
 
+## GitHub Actions Windows 验证
+
+[工作流运行 44448022772](https://github.com/chao2hang/voicepilot/actions/runs/44448022772) 在 `windows-2022` 上实际执行：
+
+- Release 核心测试：**23/23 通过，0 失败、0 跳过**。
+- `VoicePilot.App` WinUI/XAML 编译成功。
+- `VoicePilot-v0.1.0-ci.5-win-x64.zip` 自包含打包、EXE 版本校验及 Artifact 上传成功。
+- 这是 CI 编译结果，不是 Windows 11 实机 GUI、音频硬件或性能验收。
+
 ## 明确未通过/未执行的平台验证
 
-此前尝试在 Linux 使用 `-p:EnableWindowsTargeting=true` 交叉构建 WinUI 应用：包还原成功，但 Windows 的 `XamlCompiler.exe` 在当前 Linux 环境报 `Exec format error`；改用托管 XAML 编译路径又遇到 `MSB4061/MSB4027`。因此没有成功的 App/XAML 构建结论，必须在 Windows 11 执行：
+Linux 交叉构建曾在 Windows `XamlCompiler.exe` 处报 `Exec format error`，托管 XAML 路径遇到 `MSB4061/MSB4027`；这些历史失败已由上述 GitHub Windows runner 成功构建取代。目标机仍建议执行：
 
 ```powershell
 pwsh ./scripts/verify-windows.ps1
